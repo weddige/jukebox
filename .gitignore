@@ -7,3 +7,4 @@ jukebox.egg-info/
 jukebox/settings_local.py
 build/
 *.sw*
+*~
