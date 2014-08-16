@@ -501,6 +501,70 @@ class favourites_item(JukeboxAPIView):
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
+class recommendations(JukeboxAPIView):
+    permissions = (IsAuthenticated, )
+    form = forms.IdForm
+
+    def get(self, request):
+        request.session.modified = True
+
+        page = 1
+        recommendations_api = api.recommendations()
+        recommendations_api = self.api_set_user_id(request, recommendations_api)
+
+        form = forms.RecommendationsForm(request.GET)
+        if form.is_valid():
+            if (not form.cleaned_data["order_by"] == "" and
+                not form.cleaned_data["order_direction"] == ""):
+                recommendations_api.set_order_by(
+                    form.cleaned_data["order_by"],
+                    form.cleaned_data["order_direction"]
+                )
+            elif not form.cleaned_data["order_by"] == "":
+                recommendations_api.set_order_by(form.cleaned_data["order_by"])
+
+            if not form.cleaned_data["count"] is None:
+                recommendations_api.set_count(form.cleaned_data["count"])
+            if not form.cleaned_data["page"] is None:
+                page = form.cleaned_data["page"]
+
+        result = recommendations_api.index(page)
+        for k, v in enumerate(result["itemList"]):
+            result["itemList"][k]["url"] = reverse(
+                "jukebox_api_recommendations_item",
+                kwargs={"song_id": v["id"]}
+            )
+        return Response(
+            data=result
+        )
+
+
+class recommendations_item(JukeboxAPIView):
+    permissions = (IsAuthenticated, )
+    form = forms.IdForm
+
+    def get(self, request, song_id):
+        request.session.modified = True
+
+        recommendations_api = api.recommendations()
+        recommendations_api = self.api_set_user_id(request, recommendations_api)
+
+        try:
+            item = recommendations_api.get(song_id)
+            item["url"] = reverse(
+                "jukebox_api_recommendations_item",
+                kwargs={"song_id": item["id"]}
+            )
+            return Response(
+                data=item
+            )
+        except ObjectDoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        except Exception, e:
+            print e
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 class ping(JukeboxAPIView):
     def get(self, request):
         request.session.modified = True

@@ -79,6 +79,8 @@ INSTALLED_APPS = (
     'south',
     'jukebox_core',
     'jukebox_web',
+    'recommends',
+    'recommends.storages.djangoorm',
 )
 
 # automatically add jukebox plugins

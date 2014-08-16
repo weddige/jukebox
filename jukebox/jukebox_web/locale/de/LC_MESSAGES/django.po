@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-12-19 23:15-0300\n"
+"POT-Creation-Date: 2014-08-16 21:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Jens Nistler <opensource@jensnistler.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,7 +35,7 @@ msgstr "Benutzereinstellungen"
 msgid "Search term"
 msgstr "Suchbegriff"
 
-#: templates/index.html:28 templates/index.html.py:140
+#: templates/index.html:28 templates/index.html.py:145
 msgid "Search"
 msgstr "Suchen"
 
@@ -63,83 +63,87 @@ msgstr "Von mir gewählt"
 msgid "Favourites"
 msgstr "Favoriten"
 
-#: templates/index.html:71
+#: templates/index.html:70
+msgid "Recommendations"
+msgstr "Empfehlungen"
+
+#: templates/index.html:76
 msgid "Music"
 msgstr "Musik"
 
-#: templates/index.html:76
+#: templates/index.html:81
 msgid "Songs"
 msgstr "Titel"
 
-#: templates/index.html:81
+#: templates/index.html:86
 msgid "Artists"
 msgstr "Künstler"
 
-#: templates/index.html:86
+#: templates/index.html:91
 msgid "Albums"
 msgstr "Alben"
 
-#: templates/index.html:91
+#: templates/index.html:96
 msgid "Genres"
 msgstr "Musikrichtungen"
 
-#: templates/index.html:96
+#: templates/index.html:101
 msgid "Years"
 msgstr "Jahre"
 
-#: templates/index.html:109
+#: templates/index.html:114
 msgid "Title"
 msgstr "Titel"
 
-#: templates/index.html:113
+#: templates/index.html:118
 msgid "Artist"
 msgstr "Künstler"
 
-#: templates/index.html:117
+#: templates/index.html:122
 msgid "Album"
 msgstr "Album"
 
-#: templates/index.html:121
+#: templates/index.html:126
 msgid "Genre"
 msgstr "Musikrichtung"
 
-#: templates/index.html:123
+#: templates/index.html:128
 msgid "All genres"
 msgstr "Alle Musikrichtungen"
 
-#: templates/index.html:130
+#: templates/index.html:135
 msgid "Year"
 msgstr "Jahr"
 
-#: templates/index.html:132
+#: templates/index.html:137
 msgid "All years"
 msgstr "Alle Jahre"
 
-#: templates/index.html:139
+#: templates/index.html:144
 msgid "Reset"
 msgstr "Leeren"
 
-#: templates/index.html:146
+#: templates/index.html:151
 msgid "Switch language"
 msgstr "Sprache ändern"
 
-#: templates/index.html:149
+#: templates/index.html:154
 msgid "English"
 msgstr "Englisch"
 
-#: templates/index.html:152
+#: templates/index.html:157
 msgid "German"
 msgstr "Deutsch"
 
-#: templates/index.html:155
+#: templates/index.html:160
 msgid "Brazilian Portuguese"
 msgstr "Brasilianisches Portugiesisch"
 
-#: templates/index.html:158
+#: templates/index.html:163
 msgid "Misc"
 msgstr "Verschiedenes"
 
-#: templates/index.html:161
+#: templates/index.html:166
 msgid "Logout"
 msgstr "Abmelden"
 

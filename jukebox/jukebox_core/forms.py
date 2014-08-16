@@ -175,6 +175,25 @@ class FavouritesForm(forms.Form):
     )
 
 
+class RecommendationsForm (forms.Form):
+    count = forms.IntegerField(
+        required=False
+    )
+    page = forms.IntegerField(
+        required=False
+    )
+
+    order_by = forms.CharField(
+        max_length=7,
+        help_text="'title', 'artist', 'album', 'year', 'genre'",
+        required=False
+    )
+    order_direction = forms.CharField(
+        max_length=4,
+        help_text="'asc', 'desc'",
+        required=False
+    )
+
 class QueueForm(forms.Form):
     count = forms.IntegerField(
         required=False

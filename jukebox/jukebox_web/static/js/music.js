@@ -200,6 +200,9 @@ Music = {
                 case "favourites":
                     Music.loadList("/api/v1/favourites");
                     break;
+                case "recommendations":
+                    Music.loadList("/api/v1/recommendations");
+                    break;
                 case "songs":
                     Music.loadList("/api/v1/songs");
                     break;
@@ -602,6 +605,14 @@ Music = {
                 html+= "<th class=\"favourite_genre sort_genre" + Music.getOrderClass("genre", data) + "\">" + gettext("Genre") + "</th>";
                 html+= "<th class=\"favourite_added sort_created" + Music.getOrderClass("created", data) + "\">" + gettext("Date added") + "</th>";
                 break;
+            case "recommendations":
+                html+= "<tr class=\"recommendations\">";
+                html+= "<th class=\"options\">&#160;</th>";
+                html+= "<th class=\"favourite_title sort_title" + Music.getOrderClass("title", data) + "\">" + gettext("Title") + "</th>";
+                html+= "<th class=\"favourite_artist sort_artist" + Music.getOrderClass("artist", data) + "\">" + gettext("Artist") + "</th>";
+                html+= "<th class=\"favourite_album sort_album" + Music.getOrderClass("album", data) + "\">" + gettext("Album") + "</th>";
+                html+= "<th class=\"favourite_genre sort_genre" + Music.getOrderClass("genre", data) + "\">" + gettext("Genre") + "</th>";
+                break;
             case "songs":
                 html+= "<tr class=\"songs\">";
                 html+= "<th class=\"options\">&#160;</th>";
@@ -805,6 +816,50 @@ Music = {
                     }
 
                     html+= "<td>" + item.created + "</td>";
+                    break;
+                case "recommendations":
+                    html+= "<tr class=\"row_favourites\">";
+                    html+= "<td>";
+                    if (item.queued) {
+                        html+= "<img src=\"/static/img/queue_active.png\" class=\"queue_remove\" data-id=\"" + item.id + "\" alt=\"" + gettext("Revoke vote") + "\" title=\"" + gettext("Revoke vote") + "\" />";
+                    }
+                    else {
+                        html+= "<img src=\"/static/img/queue.png\" class=\"queue_add\" data-id=\"" + item.id + "\" alt=\"" + gettext("Vote to play") + "\" title=\"" + gettext("Vote to play") + "\" />";
+                    }
+                    html+= "<img src=\"/static/img/favourite_active.png\" class=\"favourite_remove\" data-id=\"" + item.id + "\" alt=\"" + gettext("Remove from favourites") + "\" title=\"" + gettext("Remove from favourites") + "\" />";
+                    html+= "</td>";
+
+                    // title
+                    if (item.title != null) {
+                        html+= "<td class=\"filter search_title\" data-value=\"" + item.title + "\">" + item.title + "</td>";
+                    }
+                    else {
+                        html+= "<td>&#160;</td>";
+                    }
+
+                    // artist
+                    if (item.artist.id != null) {
+                        html+= "<td class=\"filter filter_artist\" data-value=\"" + item.artist.id + "\">" + item.artist.name + "</td>";
+                    }
+                    else {
+                        html+= "<td>&#160;</td>";
+                    }
+
+                    // album
+                    if (item.album.id != null) {
+                        html+= "<td class=\"filter filter_album\" data-value=\"" + item.album.id + "\">" + item.album.title + "</td>";
+                    }
+                    else {
+                        html+= "<td>&#160;</td>";
+                    }
+
+                    // genre
+                    if (item.genre.id != null) {
+                        html+= "<td class=\"filter filter_genre\" data-value=\"" + item.genre.id + "\">" + item.genre.name + "</td>";
+                    }
+                    else {
+                        html+= "<td>&#160;</td>";
+                    }
                     break;
                 case "songs":
                     html+= "<tr class=\"row_songs\">";

@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.syndication.views import Feed
 import time
+from recommends.providers import recommendation_registry, RecommendationProvider
 
 class Artist(models.Model):
     class Meta:
@@ -102,3 +103,23 @@ class QueueFeed(Feed):
         # Not sure what to do with url as there isn't any unque url for song
         return "/queue/#" + unicode(int(round(time.time() * 1000)))
 
+class RecommendationsProvider(RecommendationProvider):
+    def get_users(self):
+        return User.objects.filter(is_active=True)
+
+    def get_items(self):
+        return Song.objects.all()
+
+    def get_ratings(self, obj):
+        return Favourite.objects.filter(Song=obj)
+
+    def get_rating_score(self, rating):
+        return 1
+
+    def get_rating_user(self, rating):
+        return rating.User
+
+    def get_rating_item(self, rating):
+        return rating.Song
+
+recommendation_registry.register(Favourite, [Song], RecommendationsProvider)

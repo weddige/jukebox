@@ -10,6 +10,7 @@ from datetime import datetime
 from signal import SIGABRT
 from django.contrib.auth.models import User
 from models import Song, Artist, Album, Genre, Queue, Favourite, History, Player
+from recommends.providers import recommendation_registry
 
 
 class api_base:
@@ -822,6 +823,81 @@ class favourites(api_base):
         return {
             "id": song_id,
         }
+
+
+class recommendations(api_base):
+    order_by_fields = {
+        "title": "Song__Title",
+        "artist": "Song__Artist__Name",
+        "album": "Song__Album__Title",
+        "year": "Song__Year",
+        "genre": "Song__Genre__Name",
+    }
+
+    def index(self, page=1):
+        user = User.objects.get(id=self.user_id)
+        provider = recommendation_registry.get_provider_for_content(Song)
+        #object_list = map(lambda rec: rec.object, provider.storage.get_recommendations_for_user(user, 25))
+        object_list = provider.storage.get_recommendations_for_user(user, 25)
+        object_list = self.source_set_order(object_list)
+
+        # prepare result
+        result = self.get_default_result("recommendations", page)
+
+        # get data
+        paginator = Paginator(object_list, self.count)
+        try:
+            page_obj = paginator.page(page)
+        except InvalidPage:
+            return result
+
+        result = self.result_set_order(result)
+        result["hasNextPage"] = page_obj.has_next()
+        for item in page_obj.object_list:
+            result["itemList"].append(self.get(item.object.id))
+
+        return result
+
+    def get(self, song_id):
+        item = Song.objects.get(id=song_id)
+
+        result = {
+            "id": item.id,
+            "title": None,
+            "artist": {
+                "id": None,
+                "name": None,
+            },
+            "album": {
+                "id": None,
+                "title": None,
+            },
+            "year": None,
+            "genre": {
+                "id": None,
+                "name": None,
+            },
+            "queued": False,
+            "favourite": False,
+        }
+
+        if not item.Title is None:
+            result["title"] = item.Title
+        if not item.Artist is None:
+            result["artist"]["id"] = item.Artist.id
+            result["artist"]["name"] = item.Artist.Name
+        if not item.Album is None:
+            result["album"]["id"] = item.Album.id
+            result["album"]["title"] = item.Album.Title
+        if not item.Year is None:
+            result["year"] = item.Year
+        if not item.Genre is None:
+            result["genre"]["id"] = item.Genre.id
+            result["genre"]["name"] = item.Genre.Name
+
+        result = self.result_add_queue_and_favourite(item, result)
+
+        return result
 
 
 class artists(api_base):

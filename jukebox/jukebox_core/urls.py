@@ -59,7 +59,16 @@ urlpatterns = patterns("",
         views.favourites_item.as_view(),
         name="jukebox_api_favourites_item"
     ),
-
+    url(
+        r"^api/v1/recommendations$",
+        views.recommendations.as_view(),
+        name="jukebox_api_recommendations"
+    ),
+    url(
+        r"^api/v1/recommendations/(?P<song_id>[0-9]+)$",
+        views.recommendations_item.as_view(),
+        name="jukebox_api_recommendations_item"
+    ),
     url(
         r"^api/v1/queue$",
         views.queue.as_view(),
