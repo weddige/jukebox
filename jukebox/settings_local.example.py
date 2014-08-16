@@ -13,5 +13,6 @@ AUTHENTICATION_BACKENDS = (
 )
 
 SOCIAL_AUTH_ENABLED_BACKENDS = ([auth_backends_enabled])
+LOCAL_LOGIN = False
 
 [auth_data]

@@ -36,6 +36,30 @@
                             </a>
                         </div>
                     {%  endfor %}
+                    {% if local_login %}
+                        <div>
+                            {% if form.errors %}
+                                {{ form.non_field_errors }}
+                            {% endif %}
+                            <form method="post" action="{% url jukebox_web_login %}">
+                                {% csrf_token %}
+                                <table>
+                                <tr>
+                                    <td>{{ form.username.label_tag }}</td>
+                                    <td>{{ form.username }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ form.password.label_tag }}</td>
+                                    <td>{{ form.password }}</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><button>Login</button></td>
+                                </tr>
+                                </table>
+                            </form>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

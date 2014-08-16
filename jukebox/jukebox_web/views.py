@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response
 from django.core.context_processors import csrf
 from django.http import HttpResponseRedirect
 from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.views import login as auth_login
 from django.template import RequestContext
 from django.contrib.messages.api import get_messages
 from django.conf import settings
@@ -31,13 +32,10 @@ def login(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('index')
     else:
-        return render_to_response(
-            'login.html',
-            {
-                "backends": settings.SOCIAL_AUTH_ENABLED_BACKENDS,
-            },
-            RequestContext(request)
-        )
+        return auth_login(request, 'login.html', extra_context = {
+                "backends": settings.SOCIAL_AUTH_ENABLED_BACKENDS,                
+                "local_login": settings.LOCAL_LOGIN,
+            })
 
 def login_error(request):
     messages = get_messages(request)

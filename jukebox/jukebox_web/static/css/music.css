@@ -399,6 +399,34 @@ span.searchreset {
     color: #FF0000;
 }
 
+#main ul.errorlist li {
+    color: #FF0000;
+}
+
+#main div.login table {
+    width: 30em;
+}
+
+#main div.login input {
+	display: inline-block;
+	margin: .25em 0;
+	padding: .5em 1em .55em;
+	-webkit-border-radius: .5em; 
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+    width: 15em;
+}
+
+#main div.login button {
+	display: inline-block;
+	margin: .25em 0;
+	padding: .5em 1em .55em;
+	-webkit-border-radius: .5em; 
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+    width: 17.25em;
+}
+
 #main div.noContent {
 
 }
